@@ -1,0 +1,2368 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExcelHelper</name>
+    </assembly>
+    <members>
+        <member name="T:ExcelHelper.Configuration.IExcelConfiguration">
+            <summary>
+            Interface to configuration used for reading and writing Excel data.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.Maps">
+            <summary>
+            The configured <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/>s.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.HeaderIsBold">
+            <summary>
+            Gets or sets a value indicating if the Excel file header row should be bold or not.
+            Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.AutoSizeColumns">
+            <summary>
+            Gets or sets a value indicating if the Excel file columns should be auto sized.
+            Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.MaxColumnWidth">
+            <summary>
+            Gets or sets a value indicating the maximum column widht for auto column sizing in twips
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.WillThrowOnMissingHeader">
+            <summary>
+            Gets or sets a value indicating if an exception will be thrown if a field defined in a mapping is missing.
+            True to throw an exception, otherwise false. Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.IsHeaderCaseSensitive">
+            <summary>
+            Gets or sets a value indicating whether matching header column names is case sensitive. True for case sensitive
+            matching, otherwise false. Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.IgnoreHeaderWhiteSpace">
+            <summary>
+            Gets or sets a value indicating whether matcher header column names will ignore white space. True to ignore
+            white space, otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.TrimHeaders">
+            <summary>
+            Gets or sets a value indicating whether headers should be trimmed. True to trim headers,
+            otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.TrimFields">
+            <summary>
+            Gets or sets a value indicating whether fields should be trimmed. True to trim fields,
+            otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.CultureInfo">
+            <summary>
+            Gets or sets the culture info used to read an write Excel files.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.IgnorePrivateAccessor">
+            <summary>
+            Gets or sets a value indicating if private get and set property accessor should be 
+            ignored when reading and writing. True to ignore, otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.IgnoreReadingExceptions">
+            <summary>
+            Gets or sets a value indicating whether exceptions that occur during reading should be 
+            ignored. True to ignore exceptions, otherwise false. Default is false. This is only 
+            applicable when during <see cref="M:ExcelHelper.IExcelReader.GetRecords``1"/>.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.IExcelConfiguration.ReadingExceptionCallback">
+            <summary>
+            Gets or sets the callback that is called when a reading exception occurs. This will only happen when
+            <see cref="P:ExcelHelper.Configuration.IExcelConfiguration.IgnoreReadingExceptions"/> is true, and when calling <see cref="M:ExcelHelper.IExcelReader.GetRecords``1"/>.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.RegisterClassMap``1">
+            <summary>
+            Use a <see cref="T:ExcelHelper.Configuration.ExcelClassMap`1" /> to configure mappings. When using a class map, no properties 
+            are mapped by default. Only properties specified in the mapping are used.
+            </summary>
+            <typeparam name="TMap">The type of mapping class to use.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.RegisterClassMap(System.Type)">
+            <summary>
+            Use a <see cref="T:ExcelHelper.Configuration.ExcelClassMap`1" /> to configure mappings. When using a class map, no 
+            properties are mapped by default. Only properties specified in the mapping are used.
+            </summary>
+            <param name="classMapType">The type of mapping class to use.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.RegisterClassMap(ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Registers the class map.
+            </summary>
+            <param name="map">The class map to register.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.UnregisterClassMap``1">
+            <summary>
+            Unregisters the class map.
+            </summary>
+            <typeparam name="TMap">The map type to unregister.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.UnregisterClassMap(System.Type)">
+            <summary>
+            Unregisters the class map.
+            </summary>
+            <param name="classMapType">The map type to unregister.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.UnregisterClassMap">
+            <summary>
+            Unregisters all class maps.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.AutoMap``1">
+            <summary>
+            Generates a <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the type.
+            </summary>
+            <typeparam name="T">The type to generate the map for.</typeparam>
+            <returns>The generate map.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.IExcelConfiguration.AutoMap(System.Type)">
+            <summary>
+            Generates a <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the type.
+            </summary>
+            <param name="type">The type to generate for the map.</param>
+            <returns>The generate map.</returns>
+        </member>
+        <member name="T:ExcelHelper.Configuration.DefaultExcelClassMap`1">
+            <summary>
+            A default <see cref="T:ExcelHelper.Configuration.ExcelClassMap`1"/> that can be used
+            to create a class map dynamically.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelClassMap`1">
+            <summary>
+            Maps class properties to Excel fields.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of class to map.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.ConstructUsing(System.Linq.Expressions.Expression{System.Func{`0}})">
+            <summary>
+            Constructs the row object using the given expression.
+            </summary>
+            <param name="expression">The expression.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.Map(System.Reflection.PropertyInfo)">
+            <summary>
+            Maps a property to a Excel field.
+            </summary>
+            <param name="property">Property to map</param>
+            <returns>The property mapping.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.Map(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Maps a property to a Excel field.
+            </summary>
+            <param name="expression">The property to map.</param>
+            <returns>The property mapping.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.Map(System.String)">
+            <summary>
+            Maps a property to a Excel field by name
+            </summary>
+            <param name="name">Name of the property to map</param>
+            <returns>The property mapping.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.IsImported(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Collections.Generic.List{System.Reflection.PropertyInfo})">
+            <summary>
+            Determines if a column that is mapped is actually imported in the Excel file
+            </summary>
+            <param name="expression">The property to map.</param>
+            <param name="importedColumns">List of mapped columns to check against</param>
+            <returns>The property mapping.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.References``1(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Maps a property to another class map.
+            </summary>
+            <typeparam name="TClassMap">The type of the class map.</typeparam>
+            <param name="expression">The expression.</param>
+            <returns>The reference mapping for the property.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap`1.References(System.Type,System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Maps a property to another class map.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="expression">The expression.</param>
+            <returns>The reference mapping for the property</returns>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelConfigurationException">
+            <summary>
+            Represents configuration errors that occur.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfigurationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelConfigurationException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfigurationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelConfigurationException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelConfigurationException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelClassMap">
+            <summary>
+             Maps class properties to Excel fields.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelClassMap.Constructor">
+            <summary>
+            Gets the constructor expression.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelClassMap.PropertyMaps">
+            <summary>
+            The class property mappings.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelClassMap.ReferenceMaps">
+            <summary>
+            The class property reference mappings.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.#ctor">
+            <summary>
+            Allow only internal creation of ExcelClassMap.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.PropertyMap``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Gets the property map for the given property expression.
+            </summary>
+            <typeparam name="T">The type of the class the property belongs to.</typeparam>
+            <param name="propertyExpression">The property expression.</param>
+            <returns>The ExcelPropertyMap for the given expression.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.GetMaxIndex">
+            <summary>
+            Get the largest index for the
+            properties and references.
+            </summary>
+            <returns>The max index.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.ReIndex(System.Int32)">
+            <summary>
+            Resets the indexes based on the given start index.
+            </summary>
+            <param name="indexStart">The index start.</param>
+            <returns>The last index + 1.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.AutoMap">
+            <summary>
+            Auto maps all properties for the given type. If a property
+            is mapped again it will override the existing map.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMap.AutoMapInternal(ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Auto maps the given map and checks for circular references as it goes.
+            </summary>
+            <param name="map">The map to auto map.</param>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelPropertyMap">
+            <summary>
+            Mapping info for a property to a Excel field.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.#ctor(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a new <see cref="T:ExcelHelper.Configuration.ExcelPropertyMap"/> instance using the specified property.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMap.Data">
+            <summary>
+            Property map data.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.Name(System.String[])">
+            <summary>
+            When reading, is used to get the field at the index of the name if there was a header specified. 
+            It will look for the first name match in the order listed. When writing, sets the name of the 
+            field in the header record. The first name will be used.
+            </summary>
+            <param name="names">The possible names of the Excel field.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.NameIndex(System.Int32)">
+            <summary>
+            When reading, is used to get the index of the name used when there are multiple names that are the same.
+            </summary>
+            <param name="index">The index of the name.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.Index(System.Int32)">
+            <summary>
+            When reading, is used to get the field at the given index. When writing, the fields will be 
+            written in the order of the field indexes.
+            </summary>
+            <param name="index">The index of the Excel field.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.Ignore">
+            <summary>
+            Ignore the property when reading and writing.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.WriteOnly">
+            <summary>
+            Property is only used when writing and ignored when reading
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.OptionalRead">
+            <summary>
+            Property is written but is is optional and may be missing when reading. If a property
+            is missing, the property is left as the default value for that type.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.Default(System.Object)">
+            <summary>
+            The default value that will be used when reading when the Excel field is empty.
+            </summary>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.TypeConverter(ExcelHelper.TypeConversion.ITypeConverter)">
+            <summary>
+            Specifies the <see cref="M:ExcelHelper.Configuration.ExcelPropertyMap.TypeConverter(ExcelHelper.TypeConversion.ITypeConverter)"/> to use when converting the property to and from a Excel field.
+            </summary>
+            <param name="typeConverter">The TypeConverter to use.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.TypeConverter``1">
+            <summary>
+            Specifies the <see cref="M:ExcelHelper.Configuration.ExcelPropertyMap.TypeConverter(ExcelHelper.TypeConversion.ITypeConverter)"/> to use when converting the property to and from a Excel field.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the 
+            <see cref="M:ExcelHelper.Configuration.ExcelPropertyMap.TypeConverter(ExcelHelper.TypeConversion.ITypeConverter)"/> to use.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.Culture(System.Globalization.CultureInfo)">
+            <summary>
+            The <see cref="T:System.Globalization.CultureInfo"/> used when type converting. This will override the 
+            global <see cref="P:ExcelHelper.Configuration.ExcelConfiguration.CultureInfo"/> setting.
+            </summary>
+            <param name="cultureInfo">The culture info.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.DateTimeStyle(System.Globalization.DateTimeStyles)">
+            <summary>
+            The <see cref="T:System.Globalization.DateTimeStyles"/> to use when type converting strings to <see cref="T:System.DateTime"/>.
+            </summary>
+            <param name="dateTimeStyle">The date time style.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.NumberStyle(System.Globalization.NumberStyles)">
+            <summary>
+            The <see cref="T:System.Globalization.NumberStyles"/> to use when type converting. This is used when doing any number conversions.
+            </summary>
+            <param name="numberStyle"></param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.NumberFormat(System.String)">
+            <summary>
+            The string format to be used when type converting numbers.
+            </summary>
+            <param name="format">The format.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.DateFormat(System.String)">
+            <summary>
+            The string format to be used when type converting DateTimes.
+            </summary>
+            <param name="format">The format.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.BooleanStyleNumeric">
+            <summary>
+            Sets the boolean type to be numeric 0 and 1 values. Values get written as 0 and 1 to the Excel file
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.BooleanStyleYesNo">
+            <summary>
+            Sets the boolean type to the string values "yes" and "no"
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.BooleanStyleYesBlank">
+            <summary>
+            Sets the boolean type to the string values "yes" and ""
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.BooleanStyle(System.Boolean,System.String[])">
+            <summary>
+            The string values used to represent a boolean when converting. If you are overriding the default
+            boolean string values, the first value in the list is used to write the resulting Excel file.
+            </summary>
+            <param name="isTrue">A value indicating whether true values or false values are being set.</param>
+            <param name="booleanValues">The string boolean values.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.BooleanStyle(System.Boolean,System.Boolean,System.String[])">
+            <summary>
+            The string values used to represent a boolean when converting. If you are overriding the default
+            boolean string values, the first value in the list is used to write the resulting Excel file.
+            </summary>
+            <param name="isTrue">A value indicating whether true values or false values are being set.</param>
+            <param name="clearValues">A value indication if the current values should be cleared before adding the new ones.</param>
+            <param name="booleanValues">The string boolean values.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMap.IsFormula">
+            <summary>
+            Tells the converter that this column is a formula
+            </summary>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelPropertyMapData">
+            <summary>
+            The configured data for the property map.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapData.#ctor(System.Reflection.PropertyInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelPropertyMapData"/> class.
+            </summary>
+            <param name="property">The property.</param>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.Property">
+            <summary>
+            Gets the <see cref="T:System.Reflection.PropertyInfo"/> that the data
+            is associated with.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.Names">
+            <summary>
+            Gets the list of column names.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.NameIndex">
+            <summary>
+            Gets or sets the index of the name. This is used if there are multiple columns with the same names.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.Index">
+            <summary>
+            Gets or sets the column index.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.IsIndexSet">
+            <summary>
+            Gets or sets a value indicating if the index was explicitly set. True if it was explicitly set, otherwise false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.TypeConverter">
+            <summary>
+            Gets or sets the type converter.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.TypeConverterOptions">
+            <summary>
+            Gets the type converter options.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.Ignore">
+            <summary>
+            Gets or sets a value indicating whether the field should be ignored.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.WriteOnly">
+            <summary>
+            Gets or sets a value indicating whether the field should be ignored on reads
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.OptionalRead">
+            <summary>
+            Gets or sets a value indicating whether the field should be can be missing on reads. If a field
+            is missing, the field is left as the default value for that type.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.Default">
+            <summary>
+            Gets or sets the default value used when a Excel field is empty.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapData.IsDefaultSet">
+            <summary>
+            Gets or sets a value indicating whether this instance is default value set.
+            the default value was explicitly set. True if it was explicitly set, otherwise false.
+            </summary>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelPropertyReferenceMap">
+            <summary>
+            Mapping info for a reference property mapping to a class.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyReferenceMap.Property">
+            <summary>
+            Gets the property.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyReferenceMap.Mapping">
+            <summary>
+            Gets the mapping.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyReferenceMap.#ctor(System.Reflection.PropertyInfo,ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelPropertyReferenceMap"/> class.
+            </summary>
+            <param name="property">The property.</param>
+            <param name="mapping">The <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> to use for the reference map.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyReferenceMap.GetMaxIndex">
+            <summary>
+            Get the largest index for the
+            properties and references.
+            </summary>
+            <returns>The max index.</returns>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelPropertyMapCollection">
+            <summary>
+            A collection that holds <see cref="T:ExcelHelper.Configuration.ExcelPropertyMap"/>'s.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelPropertyMapCollection"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.#ctor(System.Collections.Generic.IComparer{ExcelHelper.Configuration.ExcelPropertyMap})">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.Configuration.ExcelPropertyMapCollection"/> class.
+            </summary>
+            <param name="comparer">The comparer to use when sorting the property maps.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+            <filterpriority>1</filterpriority>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.Add(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+                            </param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+                            </exception>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.AddRange(System.Collections.Generic.ICollection{ExcelHelper.Configuration.ExcelPropertyMap})">
+            <summary>
+            Adds a range of items to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="collection">The collection to add.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. 
+                            </exception>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.Contains(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+            <returns>
+            true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            </returns>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+                            </param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.CopyTo(ExcelHelper.Configuration.ExcelPropertyMap[],System.Int32)">
+            <summary>
+            Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param><param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param><exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex"/> is less than 0.</exception><exception cref="T:System.ArgumentException">The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.</exception>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.Remove(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <returns>
+            true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+            <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+                            </param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+                            </exception>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapCollection.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <returns>
+            The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+            <returns>
+            true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.IndexOf(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+            <returns>
+            The index of <paramref name="item"/> if found in the list; otherwise, -1.
+            </returns>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1"/>.
+                            </param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.Insert(System.Int32,ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            </summary>
+            <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.
+                            </param><param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.
+                            </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.
+                            </exception><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.
+                            </exception>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the item to remove.
+                            </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.
+                            </exception><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.
+                            </exception>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelPropertyMapCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <returns>
+            The element at the specified index.
+            </returns>
+            <param name="index">The zero-based index of the element to get or set.
+                            </param><exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.
+                            </exception><exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1"/> is read-only.
+                            </exception>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelPropertyMapComparer">
+            <summary>
+            Used to compare <see cref="T:ExcelHelper.Configuration.ExcelPropertyMap"/>s.
+            The order is by field index ascending. Any
+            fields that don't have an index are pushed
+            to the bottom.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapComparer.Compare(System.Object,System.Object)">
+            <summary>
+            Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+            </summary>
+            <returns>
+            Value 
+                                Condition 
+                                Less than zero 
+                            <paramref name="x"/> is less than <paramref name="y"/>. 
+                                Zero 
+                            <paramref name="x"/> equals <paramref name="y"/>. 
+                                Greater than zero 
+                            <paramref name="x"/> is greater than <paramref name="y"/>. 
+            </returns>
+            <param name="x">The first object to compare. 
+                            </param><param name="y">The second object to compare. 
+                            </param><exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface.
+                                -or- 
+                            <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
+                            </exception><filterpriority>2</filterpriority>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelPropertyMapComparer.Compare(ExcelHelper.Configuration.ExcelPropertyMap,ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+            </summary>
+            <returns>
+            Value 
+                                Condition 
+                                Less than zero
+                            <paramref name="x"/> is less than <paramref name="y"/>.
+                                Zero
+                            <paramref name="x"/> equals <paramref name="y"/>.
+                                Greater than zero
+                            <paramref name="x"/> is greater than <paramref name="y"/>.
+            </returns>
+            <param name="x">The first object to compare.
+                            </param><param name="y">The second object to compare.
+                            </param>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelConfiguration">
+            <summary>
+            Configuration used for reading and writing Excel data.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.Maps">
+            <summary>
+            The configured <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/>s.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.ReadEmptyStrings">
+            <summary>
+            Gets or sets whether we should return blank strings or not. Excel stores empty
+            cells as null values in the file, so if you set this to true empty cells will
+            become blank strings when read into a string field, rather than being null.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.HeaderIsBold">
+            <summary>
+            Gets or sets a value indicating if the Excel file header row should be bold or not.
+            Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.AutoSizeColumns">
+            <summary>
+            Gets or sets a value indicating if the Excel file columns should be auto sized.
+            Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.MaxColumnWidth">
+            <summary>
+            Gets or sets a value indicating the maximum column widht for auto column sizing in twips
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.WillThrowOnMissingHeader">
+            <summary>
+            Gets or sets a value indicating if an exception will be thrown if a field defined in a mapping is missing.
+            True to throw an exception, otherwise false. Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.IsHeaderCaseSensitive">
+            <summary>
+            Gets or sets a value indicating whether matching header column names is case sensitive. True for case sensitive
+            matching, otherwise false. Default is true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.IgnoreHeaderWhiteSpace">
+            <summary>
+            Gets or sets a value indicating whether matcher header column names will ignore white space. True to ignore
+            white space, otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.TrimHeaders">
+            <summary>
+            Gets or sets a value indicating whether headers should be trimmed. True to trim headers,
+            otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.TrimFields">
+            <summary>
+            Gets or sets a value indicating whether fields should be trimmed. True to trim fields,
+            otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.CultureInfo">
+            <summary>
+            Gets or sets the culture info used to read an write Excel files.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.IgnorePrivateAccessor">
+            <summary>
+            Gets or sets a value indicating if private get and set property accessor should be 
+            ignored when reading and writing. True to ignore, otherwise false. Default is false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.IgnoreReadingExceptions">
+            <summary>
+            Gets or sets a value indicating whether exceptions that occur during reading should be 
+            ignored. True to ignore exceptions, otherwise false. Default is false. This is only 
+            applicable when during <see cref="M:ExcelHelper.IExcelReader.GetRecords``1"/>.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelConfiguration.ReadingExceptionCallback">
+            <summary>
+            Gets or sets the callback that is called when a reading exception occurs. This will only happen when
+            <see cref="P:ExcelHelper.Configuration.ExcelConfiguration.IgnoreReadingExceptions"/> is true, and when calling <see cref="M:ExcelHelper.IExcelReader.GetRecords``1"/>.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.RegisterClassMap``1">
+            <summary>
+            Use a <see cref="T:ExcelHelper.Configuration.ExcelClassMap`1" /> to configure mappings. When using a class map, no properties 
+            are mapped by default. Only properties specified in the mapping are used.
+            </summary>
+            <typeparam name="TMap">The type of mapping class to use.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.RegisterClassMap(System.Type)">
+            <summary>
+            Use a <see cref="T:ExcelHelper.Configuration.ExcelClassMap`1" /> to configure mappings. When using a class map, no 
+            properties are mapped by default. Only properties specified in the mapping are used.
+            </summary>
+            <param name="classMapType">The type of mapping class to use.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.RegisterClassMap(ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Registers the class map.
+            </summary>
+            <param name="map">The class map to register.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.UnregisterClassMap``1">
+            <summary>
+            Unregisters the class map.
+            </summary>
+            <typeparam name="TMap">The map type to unregister.</typeparam>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.UnregisterClassMap(System.Type)">
+            <summary>
+            Unregisters the class map.
+            </summary>
+            <param name="classMapType">The map type to unregister.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.UnregisterClassMap">
+            <summary>
+            Unregisters all class maps.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.AutoMap``1">
+            <summary>
+            Generates a <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the type.
+            </summary>
+            <typeparam name="T">The type to generate the map for.</typeparam>
+            <returns>The generate map.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelConfiguration.AutoMap(System.Type)">
+            <summary>
+            Generates a <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the type.
+            </summary>
+            <param name="type">The type to generate for the map.</param>
+            <returns>The generate map.</returns>
+        </member>
+        <member name="T:ExcelHelper.Configuration.ExcelClassMapCollection">
+            <summary>
+            Collection that holds ExcelClassMaps for record types.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.Configuration.ExcelClassMapCollection.Item(System.Type)">
+            <summary>
+            Gets the <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the specified record type.
+            </summary>
+            <value>
+            The <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/>.
+            </value>
+            <param name="type">The record type.</param>
+            <returns>The <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/> for the specified record type.</returns>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMapCollection.Add(ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Adds the specified map for it's record type. If a map
+            already exists for the record type, the specified
+            map will replace it.
+            </summary>
+            <param name="map">The map.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMapCollection.Remove(System.Type)">
+            <summary>
+            Removes the class map.
+            </summary>
+            <param name="classMapType">The class map type.</param>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMapCollection.Clear">
+            <summary>
+            Removes all maps.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.Configuration.ExcelClassMapCollection.GetGenericExcelClassMapType(System.Type)">
+            <summary>
+            Goes up the inheritance tree to find the type instance of ExcelClassMap{}.
+            </summary>
+            <param name="type">The type to traverse.</param>
+            <returns>The type that is ExcelClassMap{}.</returns>
+        </member>
+        <member name="T:ExcelHelper.ExcelReader">
+            <summary>
+            Used to read Excel files using ExcelDataReader
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReader.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new Excel stream using the given <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.#ctor(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates a new Excel stream using the given <see cref="T:System.IO.Stream"/> and <see cref="T:ExcelHelper.Configuration.ExcelConfiguration"/>.
+            </summary>
+            <param name="stream">The stream.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="P:ExcelHelper.ExcelReader.TotalColumns">
+            <summary>
+            Returns the total number of columns
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReader.TotalRows">
+            <summary>
+            Returns the total number of rows
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReader.TotalSheets">
+            <summary>
+            Returns the total number of sheets in the Excel file
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReader.SheetName">
+            <summary>
+            Returns the name of the current sheet
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.ChangeSheet(System.Int32)">
+            <summary>
+            Changes to using the passed in sheet. Note that changing to a new sheet automatically resets the 
+            internal row counter used by GetRecords.
+            </summary>
+            <param name="sheet">Sheet to change to (0 to TotalSheets - 1)</param>
+            <returns>True on success, false if the sheet is out of range</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.SkipRows(System.Int32)">
+            <summary>
+            Skip over the given number of rows. Useful for cases where the header columns are not in the first row.
+            </summary>
+            <param name="count">The number of rows to skip</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.ReadRow">
+            <summary>
+            Reads the next row in the Excel file to you can get the cell values using the GetCell() function
+            </summary>
+            <returns>True if there is another row, false if not</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetColumn``1(System.Int32)">
+            <summary>
+            Reads a cell from the Excel file.
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="index">Column index to reead the value from.</param>
+            <returns>The value from the column converted to the specific type</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetField(System.Int32)">
+            <summary>
+            Gets the raw field at position (column) index.
+            </summary>
+            <param name="index">The zero based index of the field.</param>
+            <returns>The raw field.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.ParseHeaderRecord">
+            <summary>
+            Parses the named indexes from the header record.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetRecords``1">
+            <summary>
+            Gets all the records in the Excel file and converts each to <see cref="T:System.Type"/> T.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the record.</typeparam>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of records.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetRecordsAsDictionary">
+            <summary>
+            Gets all the records in the Excel file and converts each to dictionary of strings to strings.
+            </summary>
+            <returns>An enumeration of dictionaries.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetImportedColumns">
+            <summary>
+            Gets a list of all the properties for columns that are found in the import. This can only be called
+            after first calling GetRecords()
+            </summary>
+            <returns>List of properties for columns found in the Excel file.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <param name="disposing">True if the instance needs to be disposed of.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetFieldIndex(System.Boolean,System.String[],System.Int32)">
+            <summary>
+            Gets the index of the field at name if found.
+            </summary>
+            <param name="optionalRead">True if the field is optional on read</param>
+            <param name="names">The possible names of the field to get the index for.</param>
+            <param name="index">The index of the field if there are multiple fields with the same name.</param>
+            <returns>The index of the field if found, otherwise -1.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.GetParseRecordFunc(System.Type)">
+            <summary>
+            Gets the function delegate used to populate a custom class object with data from the reader.
+            </summary>
+            <param name="type">The type of object that is created and populated.</param>
+            <returns>The function delegate.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.CreatePropertyBindingsForMapping(ExcelHelper.Configuration.ExcelClassMap,System.Collections.Generic.List{System.Linq.Expressions.MemberBinding})">
+            <summary>
+            Creates the property bindings for the given <see cref="T:ExcelHelper.Configuration.ExcelClassMap"/>.
+            </summary>
+            <param name="mapping">The mapping to create the bindings for.</param>
+            <param name="bindings">The bindings that will be added to from the mapping.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.AddPropertyBindings(ExcelHelper.Configuration.ExcelPropertyMapCollection,System.Collections.Generic.List{System.Linq.Expressions.MemberBinding})">
+            <summary>
+            Adds a <see cref="T:System.Linq.Expressions.MemberBinding"/> for each property for it's field.
+            </summary>
+            <param name="properties">The properties to add bindings for.</param>
+            <param name="bindings">The bindings that will be added to from the properties.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.CanRead(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Determines if the property for the <see cref="T:ExcelHelper.Configuration.ExcelPropertyMap"/>
+            can be read.
+            </summary>
+            <param name="propertyMap">The property map.</param>
+            <returns>A value indicating of the property can be read. True if it can, otherwise false.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelReader.CanRead(ExcelHelper.Configuration.ExcelPropertyReferenceMap)">
+            <summary>
+            Determines if the property for the <see cref="T:ExcelHelper.Configuration.ExcelPropertyReferenceMap"/>
+            can be read.
+            </summary>
+            <param name="propertyReferenceMap">The reference map.</param>
+            <returns>A value indicating of the property can be read. True if it can, otherwise false.</returns>
+        </member>
+        <member name="T:ExcelHelper.ExcelReadErrorDetails">
+            <summary>
+            Defines details about an error while parsing the file
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReadErrorDetails.Row">
+            <summary>
+            Current row within the file where the error occurred
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReadErrorDetails.Column">
+            <summary>
+            Current column within the file where the error occurred
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReadErrorDetails.FieldName">
+            <summary>
+            Current field name of the column where the error occurred
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelReadErrorDetails.FieldValue">
+            <summary>
+            Actual value from the cell that caused the error
+            </summary>
+        </member>
+        <member name="T:ExcelHelper.ExcelBadDataException">
+            <summary>
+            Represents errors that occur due to bad data.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelBadDataException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelBadDataException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelBadDataException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelBadDataException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelBadDataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelBadDataException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.ExcelFactory">
+            <summary>
+            Creates ExcelHelper classes.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelFactory.CreateReader(System.IO.Stream)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelReader"/>.
+            </summary>
+            <param name="stream">The text stream to use for the excel stream.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelFactory.CreateReader(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelReader"/>.
+            </summary>
+            <param name="stream">The text stream to use for the excel stream.</param>
+            <param name="configuration">The configuration to use for the stream.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelFactory.CreateWriter(System.IO.Stream)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelWriter"/>.
+            </summary>
+            <param name="stream">The stream used to write the Excel file.</param>
+            <returns>The created writer.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelFactory.CreateWriter(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelWriter"/>.
+            </summary>
+            <param name="stream">The stream used to write the Excel file.</param>
+            <param name="configuration">The configuration to use for the writer.</param>
+            <returns>The created writer.</returns>
+        </member>
+        <member name="T:ExcelHelper.ExcelHelperException">
+            <summary>
+            Represents errors that occur in ExcelHelper.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelHelperException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelHelperException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelHelperException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelHelperException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelHelperException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelHelperException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.ExcelMissingFieldException">
+            <summary>
+            Represents an error caused because a field is missing
+            in the header while reading a Excel file.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelMissingFieldException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelMissingFieldException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelMissingFieldException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelMissingFieldException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelMissingFieldException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelMissingFieldException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.ExcelReaderException">
+            <summary>
+            Represents errors that occur while reading a Excel file.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelReaderException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelReaderException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelReaderException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelReaderException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelReaderException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelReaderException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.ExcelWriter">
+            <summary>
+            Used to write Excel files.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.ExcelWriter.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new Excel writer using the given <see cref="T:System.IO.Stream"/> and 
+            a default <see cref="T:ExcelHelper.Configuration.ExcelConfiguration"/>.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> used to write the Excel file.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.#ctor(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates a new Excel writer using the given <see cref="T:System.IO.Stream"/> and <see cref="T:ExcelHelper.Configuration.ExcelConfiguration"/>.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> used to write the Excel file.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="P:ExcelHelper.ExcelWriter.DefaultFont">
+            <summary>
+            Gets or sets the default font for the Excel file
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.UpdateStyle(ClosedXML.Excel.IXLStyle,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Update an Excel cell style with the passed in attributes
+            </summary>
+            <param name="cellStyle">IXLStyle to update</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.ChangeSheet(System.Int32)">
+            <summary>
+            Changes to using the passed in sheet. Note that changing to a new sheet automatically resets the 
+            internal row and column counter used by WriteRecords.
+            </summary>
+            <param name="sheet">Sheet to change to</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteCell``1(System.Int32,System.Int32,``0,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Writes a cell to the Excel file.
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="row">Row to write the field to.</param>
+            <param name="col">Column to write the field to.</param>
+            <param name="field">The field to write.</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.SetColumnFormat(System.Int32,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Set an entire column to a specific format. By default Excel defines the 
+            cell style in the following order; cell, row, column, worksheet default
+            </summary>
+            <param name="col">Column to set the format for</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.SetRowFormat(System.Int32,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Set an entire row to a specific format. By default Excel defines the 
+            cell style in the following order; cell, row, column, worksheet default
+            </summary>
+            <param name="row">Row to set the format for</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.AdjustColumnsToContent(System.Double,System.Double)">
+            <summary>
+            Adjusts all the column widths to match the content
+            </summary>
+            <param name="minWidth">Minimum width in twips</param>
+            <param name="maxWidth">Maximum width in twips</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.AdjustRowsToContent(System.Double,System.Double)">
+            <summary>
+            Adjusts all the column widths to match the content
+            </summary>
+            <param name="minHeight">Minimum height in twips</param>
+            <param name="maxHeight">Maximum height in twips</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.SetColumnWidth(System.Int32,System.Double)">
+            <summary>
+            Set the size of a specific column in twips
+            </summary>
+            <param name="col">Column to set the width for</param>
+            <param name="width">Width of the column in twips</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.SetRowHeight(System.Int32,System.Double)">
+            <summary>
+            Set the height of a specific row in twips
+            </summary>
+            <param name="row">Row to set the height for</param>
+            <param name="height">Height of the column in twips</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteFieldNative(System.Object)">
+            <summary>
+            Writes a field to the Excel file natively
+            </summary>
+            <param name="field">The field object to write.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteFieldConverted(System.Object,ExcelHelper.TypeConversion.ITypeConverter,ExcelHelper.TypeConversion.TypeConverterOptions)">
+            <summary>
+            Writes a field to the Excel file
+            </summary>
+            <param name="field">The field object to write.</param>
+            <param name="converter">Type converter to use</param>
+            <param name="typeConverterOptions">Type converter options to use</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteFieldFormula(System.Object)">
+            <summary>
+            Writes a field to the Excel file as a formula. We assume the incoming value
+            is a string 
+            </summary>
+            <param name="field">The field object to write.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.NextRecord">
+            <summary>
+            Ends writing of the current record and starts a new record. This is used 
+            when manually writing records with WriteField.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteHeader(ExcelHelper.Configuration.ExcelPropertyMapCollection)">
+            <summary>
+            Writes the header record from the given properties.
+            </summary>
+            <param name="properties">The properties for the records.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteColumnStyles(ExcelHelper.Configuration.ExcelPropertyMapCollection)">
+            <summary>
+            Writes out the column styles for the record
+            </summary>
+            <param name="properties">Properties for the record</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.WriteRecords``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Writes the list of typed records to the Excel file.
+            </summary>
+            <param name="records">The list of records to write.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.Close">
+            <summary>
+            Closes the writer and saves the written data to the stream. Automatically called
+            when disposed.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.PerformColumnResize">
+            <summary>
+            Perform the column sizing for the sheet, and then clear out the column widths
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <param name="disposing">True if the instance needs to be disposed of.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.AddProperties(ExcelHelper.Configuration.ExcelPropertyMapCollection,ExcelHelper.Configuration.ExcelClassMap)">
+            <summary>
+            Adds the properties from the mapping. This will recursively
+            traverse the mapping tree and add all properties for
+            reference maps.
+            </summary>
+            <param name="properties">The properties to be added to.</param>
+            <param name="mapping">The mapping where the properties are added from.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.CreatePropertyExpression(System.Linq.Expressions.Expression,ExcelHelper.Configuration.ExcelClassMap,ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Creates a property expression for the given property on the record.
+            This will recursively traverse the mapping to find the property
+            and create a safe property accessor for each level as it goes.
+            </summary>
+            <param name="recordExpression">The current property expression.</param>
+            <param name="mapping">The mapping to look for the property to map on.</param>
+            <param name="propertyMap">The property map to look for on the mapping.</param>
+            <returns>An Expression to access the given property.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.GetWriteRecordAction(System.Type,ExcelHelper.Configuration.ExcelPropertyMapCollection)">
+            <summary>
+            Gets the action delegate used to write the custom
+            class object to the writer.
+            </summary>
+            <param name="type">The type of the custom class being written.</param>
+            <param name="properties">Properties for the record</param>
+            <returns>The action delegate.</returns>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriter.CanWrite(ExcelHelper.Configuration.ExcelPropertyMap)">
+            <summary>
+            Checks if the property can be written.
+            </summary>
+            <param name="propertyMap">The property map that we are checking.</param>
+            <returns>A value indicating if the property can be written.
+            True if the property can be written, otherwise false.</returns>
+        </member>
+        <member name="T:ExcelHelper.ExcelWriterException">
+            <summary>
+            Represents errors that occur while writing a Excel file.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriterException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelWriterException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriterException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelWriterException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExcelWriterException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.ExcelWriterException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.ExceptionHelper">
+            <summary>
+            Common exception tasks.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ExceptionHelper.AddExceptionDataMessage(System.Exception,System.Type,ExcelHelper.ExcelReadErrorDetails)">
+            <summary>
+            Adds ExcelHelper specific information to <see cref="P:System.Exception.Data"/>.
+            </summary>
+            <param name="exception">The exception to add the info to.</param>
+            <param name="type">The type of object that was being created in the <see cref="T:ExcelHelper.ExcelReader"/>.</param>
+            <param name="details">The details of the parsing error.</param>
+        </member>
+        <member name="M:ExcelHelper.ExceptionHelper.GetErrorMessage(System.Type,ExcelHelper.ExcelReadErrorDetails)">
+            <summary>
+            Gets ExcelHelper information to be added to an exception.
+            </summary>
+            <param name="type">The type of object that was being created in the <see cref="T:ExcelHelper.ExcelReader"/>.</param>
+            <param name="details">The details of the parsing error.</param>
+            <returns>The ExcelHelper information.</returns>
+        </member>
+        <member name="T:ExcelHelper.IExcelFactory">
+            <summary>
+            Defines methods used to create
+            ExcelHelper classes.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.IExcelFactory.CreateReader(System.IO.Stream)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelReader"/>.
+            </summary>
+            <param name="stream">The text stream to use for the excel stream.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelFactory.CreateReader(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelReader"/>.
+            </summary>
+            <param name="stream">The text stream to use for the excel stream.</param>
+            <param name="configuration">The configuration to use for the stream.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelFactory.CreateWriter(System.IO.Stream)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelWriter"/>.
+            </summary>
+            <param name="stream">The stream used to write the Excel file.</param>
+            <returns>The created writer.</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelFactory.CreateWriter(System.IO.Stream,ExcelHelper.Configuration.ExcelConfiguration)">
+            <summary>
+            Creates an <see cref="T:ExcelHelper.IExcelWriter"/>.
+            </summary>
+            <param name="stream">The stream used to write the Excel file.</param>
+            <param name="configuration">The configuration to use for the writer.</param>
+            <returns>The created writer.</returns>
+        </member>
+        <member name="T:ExcelHelper.IExcelReader">
+            <summary>
+            Defines methods used to read parsed data from a Excel file.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelReader.Configuration">
+            <summary>
+            Gets or sets the configuration.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelReader.TotalColumns">
+            <summary>
+            Returns the total number of columns
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelReader.TotalSheets">
+            <summary>
+            Returns the total number of sheets in the Excel file
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelReader.SheetName">
+            <summary>
+            Returns the name of the current sheet
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.ChangeSheet(System.Int32)">
+            <summary>
+            Changes to using a specific sheet in the Excel file. Note that changing to a new sheet automatically resets the 
+            internal row counter used by GetRecords.
+            </summary>
+            <param name="sheet">Sheet to change to (0 to TotalSheets - 1)</param>
+            <returns>True on success, false if the sheet is out of range</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.SkipRows(System.Int32)">
+            <summary>
+            Skip over the given number of rows. Useful for cases where the header columns are not in the first row.
+            </summary>
+            <param name="count">The number of rows to skip</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.ReadRow">
+            <summary>
+            Moves to the next row in the Excel file when using the GetCell() function
+            </summary>
+            <returns>True if there is another row, false if not</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.GetColumn``1(System.Int32)">
+            <summary>
+            Reads a cell from the Excel file at the current row
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="index">Column to write the field to.</param>
+            <returns>The value from the cell converted to the specific type</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.GetRecords``1">
+            <summary>
+            Gets all the records in the Excel file and converts each to <see cref="T:System.Type"/> T.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the record.</typeparam>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of records.</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.GetRecordsAsDictionary">
+            <summary>
+            Gets all the records in the Excel file and converts each to dictionary of strings to strings.
+            </summary>
+            <returns>An enumeration of dictionaries.</returns>
+        </member>
+        <member name="M:ExcelHelper.IExcelReader.GetImportedColumns">
+            <summary>
+            Gets a list of all the properties for columns that are found in the import. This can only be called
+            after first calling GetRecords()
+            </summary>
+            <returns>List of properties for columns found in the Excel file.</returns>
+        </member>
+        <member name="T:ExcelHelper.IExcelWriter">
+            <summary>
+            Defines methods used to write to a Excel file.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelWriter.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.IExcelWriter.DefaultFont">
+            <summary>
+            Gets or sets the default font for the Excel file
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.ChangeSheet(System.Int32)">
+            <summary>
+            Changes to using the passed in sheet. Note that changing to a new sheet automatically resets the 
+            internal row and column counter used by WriteRecords.
+            </summary>
+            <param name="sheet">Sheet to change to</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.WriteCell``1(System.Int32,System.Int32,``0,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Writes a cell to the Excel file.
+            </summary>
+            <typeparam name="T">The type of the field.</typeparam>
+            <param name="row">Row to write the field to.</param>
+            <param name="col">Column to write the field to.</param>
+            <param name="field">The field to write.</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.SetColumnFormat(System.Int32,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Set an entire column to a specific format. By default Excel defines the 
+            cell style in the following order; cell, row, column, worksheet default
+            </summary>
+            <param name="col">Column to set the format for</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.SetRowFormat(System.Int32,System.String,System.String,System.Nullable{System.Drawing.FontStyle},System.Nullable{System.Single},System.String)">
+            <summary>
+            Set an entire row to a specific format. By default Excel defines the 
+            cell style in the following order; cell, row, column, worksheet default
+            </summary>
+            <param name="row">Row to set the format for</param>
+            <param name="numberFormat">Optional number formatting string for the cell</param>
+            <param name="dateFormat">Optional DateTime formatting string for the cell</param>
+            <param name="fontStyle">Optional font style for the cell</param>
+            <param name="fontSize">Optional font size for the cell</param>
+            <param name="fontName">Optional font name for the cell</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.AdjustColumnsToContent(System.Double,System.Double)">
+            <summary>
+            Adjusts all the column widths to match the content
+            </summary>
+            <param name="minWidth">Minimum width in twips</param>
+            <param name="maxWidth">Maximum width in twips</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.AdjustRowsToContent(System.Double,System.Double)">
+            <summary>
+            Adjusts all the column widths to match the content
+            </summary>
+            <param name="minHeight">Minimum height in twips</param>
+            <param name="maxHeight">Maximum height in twips</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.SetColumnWidth(System.Int32,System.Double)">
+            <summary>
+            Set the width of a specific column in twips
+            </summary>
+            <param name="col">Column to set the width for</param>
+            <param name="width">Width of the column in twips</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.SetRowHeight(System.Int32,System.Double)">
+            <summary>
+            Set the height of a specific row in twips
+            </summary>
+            <param name="row">Row to set the height for</param>
+            <param name="height">Height of the column in twips</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.WriteRecords``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Writes the list of typed records to the Excel file.
+            </summary>
+            <param name="records">The list of records to write.</param>
+        </member>
+        <member name="M:ExcelHelper.IExcelWriter.Close">
+            <summary>
+            Closes the writer and saves the written data to the stream. Automatically called
+            when disposed.
+            </summary>
+        </member>
+        <member name="T:ExcelHelper.ReflectionHelper">
+            <summary>
+            Common reflection tasks.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.ReflectionHelper.CreateInstance``1">
+            <summary>
+            Creates an instance of type T.
+            </summary>
+            <typeparam name="T">The type of instance to create.</typeparam>
+            <returns>A new instance of type T.</returns>
+        </member>
+        <member name="M:ExcelHelper.ReflectionHelper.CreateInstance(System.Type,System.Object[])">
+            <summary>
+            Creates an instance of the specified type.
+            </summary>
+            <param name="type">The type of instance to create.</param>
+            <param name="args">The constructor arguments.</param>
+            <returns>A new instance of the specified type.</returns>
+        </member>
+        <member name="M:ExcelHelper.ReflectionHelper.GetConstructor``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Gets the constructor <see cref="T:System.Linq.Expressions.NewExpression"/> from the give <see cref="T:System.Linq.Expressions.Expression"/>.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the object that will be constructed.</typeparam>
+            <param name="expression">The constructor <see cref="T:System.Linq.Expressions.Expression"/>.</param>
+            <returns>A constructor <see cref="T:System.Linq.Expressions.NewExpression"/>.</returns>
+            <exception cref="T:System.ArgumentException">Not a constructor expression.;expression</exception>
+        </member>
+        <member name="M:ExcelHelper.ReflectionHelper.GetProperty``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Gets the property from the expression.
+            </summary>
+            <typeparam name="TModel">The type of the model.</typeparam>
+            <param name="expression">The expression.</param>
+            <returns>The <see cref="T:System.Reflection.PropertyInfo"/> for the expression.</returns>
+        </member>
+        <member name="M:ExcelHelper.ReflectionHelper.GetMemberExpression``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets the member expression.
+            </summary>
+            <typeparam name="TModel">The type of the model.</typeparam>
+            <typeparam name="T"></typeparam>
+            <param name="expression">The expression.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.BooleanConverter">
+            <summary>
+            Converts a Boolean to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.BooleanConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.BooleanConverter.ConvertToExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts the object to an Excel value. This is not called if Excel supports the type natively.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="value">The object to convert to an Excel value.</param>
+            <returns>The Excel value representation of the object.</returns>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.BooleanConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.ByteConverter">
+            <summary>
+            Converts a Byte to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ByteConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ByteConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.CharConverter">
+            <summary>
+            Converts a Char to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.CharConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.CharConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.ExcelTypeConverterException">
+            <summary>
+            Represents errors that occur while reading a Excel file.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ExcelTypeConverterException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.TypeConversion.ExcelTypeConverterException"/> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ExcelTypeConverterException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.TypeConversion.ExcelTypeConverterException"/> class
+            with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ExcelTypeConverterException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ExcelHelper.TypeConversion.ExcelTypeConverterException"/> class
+            with a specified error message and a reference to the inner exception that 
+            is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.DateTimeConverter">
+            <summary>
+            Converts a DateTime to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DateTimeConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DateTimeConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.DecimalConverter">
+            <summary>
+            Converts a Decimal to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DecimalConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DecimalConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.DoubleConverter">
+            <summary>
+            Converts a Double to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DoubleConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DoubleConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.EnumConverter">
+            <summary>
+            Converts an Enum to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.EnumConverter.#ctor(System.Type)">
+            <summary>
+            Creates a new <see cref="T:ExcelHelper.TypeConversion.EnumConverter"/> for the given <see cref="T:System.Enum"/> <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The type of the Enum.</param>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.EnumConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.EnumerableConverter">
+            <summary>
+            Throws an exception when used. This is here so that it's apparent
+            that there is no support for IEnumerable type conversion. A custom
+            converter will need to be created to have a field convert to and 
+            from an IEnumerable.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.EnumerableConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.EnumerableConverter.ConvertToExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts the object to an Excel value. This is not called if Excel supports the type natively.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="value">The object to convert to an Excel value.</param>
+            <returns>The Excel value representation of the object.</returns>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.EnumerableConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.SingleConverter">
+            <summary>
+            Converts a Float to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.SingleConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.SingleConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.GuidConverter">
+            <summary>
+            Converts a Guid to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.GuidConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.GuidConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.Int16Converter">
+            <summary>
+            Converts an Int16 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int16Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int16Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.Int32Converter">
+            <summary>
+            Converts an Int32 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int32Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int32Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.Int64Converter">
+            <summary>
+            Converts an Int64 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int64Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.Int64Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.ITypeConverter">
+            <summary>
+            Converts objects to and from Excel compatible values. Internally Excel will store values as any
+            of the following types:
+                - Null (empty cell)
+                - Strings
+                - Numeric (stored as a double)
+                - Boolean
+                - DateTime (stored as a double value)
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.ITypeConverter.AcceptsNativeType">
+            <summary>
+            True if the type converter will pass the native type through to Excel on writing, false
+            if conversion is required.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.ITypeConverter.ConvertedType">
+            <summary>
+            Returns the type that we are converting from
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ITypeConverter.ConvertToExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts the object to an Excel value. This is not called if Excel supports the type natively.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="value">The object to convert to an Excel value.</param>
+            <returns>The Excel value representation of the object.</returns>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.ITypeConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.NullableConverter">
+            <summary>
+            Converts a Nullable to and from an Excel value.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.NullableConverter.NullableType">
+            <summary>
+            Gets the type of the nullable.
+            </summary>
+            <value>
+            The type of the nullable.
+            </value>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.NullableConverter.UnderlyingType">
+            <summary>
+            Gets the underlying type of the nullable.
+            </summary>
+            <value>
+            The underlying type.
+            </value>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.NullableConverter.UnderlyingTypeConverter">
+            <summary>
+            Gets the type converter for the underlying type.
+            </summary>
+            <value>
+            The type converter.
+            </value>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.NullableConverter.#ctor(System.Type)">
+            <summary>
+            Creates a new <see cref="T:ExcelHelper.TypeConversion.NullableConverter"/> for the given <see cref="T:System.Nullable`1"/> <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The nullable type.</param>
+            <exception cref="T:System.ArgumentException">type is not a nullable type.</exception>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.NullableConverter.ConvertToExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts the object to an Excel value. This is not called if Excel supports the type natively.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="value">The object to convert to an Excel value.</param>
+            <returns>The Excel value representation of the object.</returns>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.NullableConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.SByteConverter">
+            <summary>
+            Converts a SByte to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.SByteConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.SByteConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.StringConverter">
+            <summary>
+            Converts a string to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.StringConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.StringConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.DefaultTypeConverter">
+            <summary>
+            Converts an object to and from a an Excel value.
+            </summary>
+        </member>
+        <member name="F:ExcelHelper.TypeConversion.DefaultTypeConverter.InvalidConversionMessage">
+            <summary>
+            Invalid conversion message
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DefaultTypeConverter.#ctor(System.Boolean,System.Type)">
+            <summary>
+            Constructor for the default type converter base class
+            </summary>
+            <param name="acceptsNativeType">True if Excel handles this type natively, false if not</param>
+            <param name="convertedType">Type that we are converting</param>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.DefaultTypeConverter.AcceptsNativeType">
+            <summary>
+            True if the type converter will pass the native type through to Excel on writing, false
+            if conversion is required.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.DefaultTypeConverter.ConvertedType">
+            <summary>
+            Returns the type that we are converting from
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DefaultTypeConverter.ConvertToExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts the object to an Excel value. This is not called if Excel supports the type natively.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="value">The object to convert to an Excel value.</param>
+            <returns>The Excel value representation of the object.</returns>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.DefaultTypeConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.TimeSpanConverter">
+            <summary>
+            Converts a TimeSpan to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TimeSpanConverter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TimeSpanConverter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.TypeConverterOptionsFactory">
+            <summary>
+            Creates <see cref="T:ExcelHelper.TypeConversion.TypeConverterOptions"/>.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterOptionsFactory.AddOptions(System.Type,ExcelHelper.TypeConversion.TypeConverterOptions)">
+            <summary>
+            Adds the <see cref="T:ExcelHelper.TypeConversion.TypeConverterOptions"/> for the given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The type the options are for.</param>
+            <param name="options">The options.</param>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterOptionsFactory.GetOptions(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            Get the <see cref="T:ExcelHelper.TypeConversion.TypeConverterOptions"/> for the given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The type the options are for.</param>
+            <param name="defaultCulture">Default culture to use if not specified</param>
+            <returns>The options for the given type.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.TypeConverterOptions">
+            <summary>
+            Options used when doing type conversion.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.CultureInfo">
+            <summary>
+            Gets or sets the culture info.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.DateTimeStyle">
+            <summary>
+            Gets or sets the date time style.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.NumberStyle">
+            <summary>
+            Gets or sets the number style.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.NumberFormat">
+            <summary>
+            Gets or sets the string format for numbers. These are Excel formatting strings. You can find a reference to them with this link:
+            
+            https://support.office.com/en-us/article/Number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.DateFormat">
+            <summary>
+            Gets or sets the string format for DateTimes. These are Excel formatting strings. You can find a reference to them with this link:
+            
+            https://support.office.com/en-us/article/Number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.BooleanTrueValues">
+            <summary>
+            Gets the list of values that can be
+            used to represent a boolean of true.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.BooleanFalseValues">
+            <summary>
+            Gets the list of values that can be
+            used to represent a boolean of false.
+            </summary>
+        </member>
+        <member name="P:ExcelHelper.TypeConversion.TypeConverterOptions.IsFormula">
+            <summary>
+            Indicates that the column should be considered a formula
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterOptions.Merge(ExcelHelper.TypeConversion.TypeConverterOptions[])">
+            <summary>
+            Merges TypeConverterOptions by applying the values of sources in order to a
+            new TypeConverterOptions instance.
+            </summary>
+            <param name="sources">The sources that will be applied.</param>
+            <returns>A new instance of TypeConverterOptions with the source applied to it.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.TypeConverterFactory">
+            <summary>
+            Creates <see cref="T:ExcelHelper.TypeConversion.ITypeConverter"/>s.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterFactory.#cctor">
+            <summary>
+            Initializes the <see cref="T:ExcelHelper.TypeConversion.TypeConverterFactory" /> class.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterFactory.AddConverter(System.Type,ExcelHelper.TypeConversion.ITypeConverter)">
+            <summary>
+            Adds the <see cref="T:ExcelHelper.TypeConversion.ITypeConverter"/> for the given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The type the converter converts.</param>
+            <param name="typeConverter">The type converter that converts the type.</param>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.TypeConverterFactory.GetConverter(System.Type)">
+            <summary>
+            Gets the converter for the given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The type to get the converter for.</param>
+            <returns>The <see cref="T:ExcelHelper.TypeConversion.ITypeConverter"/> for the given <see cref="T:System.Type"/>.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.UInt32Converter">
+            <summary>
+            Converts a UInt32 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt32Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt32Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.UInt64Converter">
+            <summary>
+            Converts a UInt64 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt64Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt64Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+        <member name="T:ExcelHelper.TypeConversion.UInt16Converter">
+            <summary>
+            Converts a UInt16 to and from an Excel value.
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt16Converter.#ctor">
+            <summary>
+            Constructor for the type converter
+            </summary>
+        </member>
+        <member name="M:ExcelHelper.TypeConversion.UInt16Converter.ConvertFromExcel(ExcelHelper.TypeConversion.TypeConverterOptions,System.Object)">
+            <summary>
+            Converts an Excel value to an object.
+            </summary>
+            <param name="options">The options to use when converting.</param>
+            <param name="excelValue">The Excel value to convert to an object.</param>
+            <returns>The object created from the Excel value.</returns>
+        </member>
+    </members>
+</doc>
